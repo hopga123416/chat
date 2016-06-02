@@ -6,8 +6,6 @@
    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
    <script>
    var socket = io();
-   //define functions socket.emit sending to server (app.js) and socket.on receiving 
-     // 'new message' is for the id of the socket and $('#new-message') is for the button
      function sendFunction() {
      socket.emit('new message', $('#new-message').val());
      $('#new-message').val('');
