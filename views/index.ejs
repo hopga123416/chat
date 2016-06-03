@@ -1,15 +1,21 @@
 <head>  
-   <title><Chat room %></title>
+   <title>Chat room </title>
    <link rel='stylesheet' href='/stylesheets/style.css' />
    <script src="/socket.io/socket.io.js"></script>
    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
    <script>
    var socket = io();
+   
+	socket.on('connect', function(){
+		socket.emit('adduser', prompt("What's your name?"));
+	});
+   
      function sendFunction() {
      socket.emit('new message', $('#new-message').val());
      $('#new-message').val('');
    }
-    // 'chat message' is for the id of the socket and $('#new-area') is for the text area
+    
+	
    socket.on('chat message', function(msg){
      $('#messages-area').append($('<li>').text(msg));
    });
