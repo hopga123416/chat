@@ -18,7 +18,7 @@ app.set('view engine', 'ejs');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(bodyParser.json());
+app.use(bodyParser.json());	
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -56,16 +56,24 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-app.io.on('connection', function(socket){
-console.log('a user connected');
 
-// receive from client (index.ejs) with socket.on
-socket.on('new message', function(msg){
-      console.log('new message: ' + msg);
-      // send to client (index.ejs) with app.io.emit
-      // here it reacts direct after receiving a message from the client
-      app.io.emit('chat message' , msg);
-      });
+var usernames = {};
+app.io.on('connection', function(socket){ 
+	socket.on('sendchat', function (data) {
+		app.io.emit('updatechat', socket.username, data);
+	});
+	socket.on('adduser', function(username){
+		socket.username = username;
+		usernames[username] = username;
+		socket.emit('updatechat', 'SERVER', 'you have connected');
+		socket.broadcast.emit('updatechat', 'SERVER', username + ' has connected');
+		app.io.emit('updateusers', usernames);
+	});
+	socket.on('disconnect', function(){
+		delete usernames[socket.username];
+		app.io.emit('updateusers', usernames);
+		socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected');
+	});
 });
 
 module.exports = app;

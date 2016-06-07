@@ -4,29 +4,52 @@
    <script src="/socket.io/socket.io.js"></script>
    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
    <script>
-   var socket = io();
+   var socket = io.connect();
    
-	socket.on('connect', function(){
-		socket.emit('adduser', prompt("What's your name?"));
-	});
-   
-     function sendFunction() {
-     socket.emit('new message', $('#new-message').val());
-     $('#new-message').val('');
-   }
-    
 	
-   socket.on('chat message', function(msg){
-     $('#messages-area').append($('<li>').text(msg));
-   });
+	 socket.on('connect', function(){
+    socket.emit('adduser', prompt("What's your name?"));
+  });
+
+  socket.on('updatechat', function (username, data) {
+    $('#conversation').append('<b>'+username + ':</b> ' + data + '<br>');
+  });
+
+  socket.on('updateusers', function(data) {
+    $('#users').empty();
+    $.each(data, function(key, value) {
+      $('#users').append('<div>' + key + '</div>');
+    });
+  });
+
+  $(function(){
+    $('#datasend').click( function() {
+      var message = $('#data').val();
+      $('#data').val('');
+      socket.emit('sendchat', message);
+    });
+
+    $('#data').keypress(function(e) {
+      if(e.which == 13) {
+        $(this).blur();
+        $('#datasend').focus().click();
+      }
+    });
+  });
+	
+	
+
    </script>
  </head>  
 
  <body>  
-   <h1>English</h1>
-   <h3>Welcome to Chat room</h3>
-   <ul id="messages-area"></ul>
-   <form id="form" onsubmit="return false;">
-     <input id="new-message" type="text" /><button onclick="sendFunction()">Send</button>
-   </form>
+   <div style="float:left;width:100px;border-right:1px solid black;height:300px;padding:10px;overflow:scroll-y;">
+  <b>USERS</b>
+  <div id="users"></div>
+</div>
+<div style="float:left;width:300px;height:250px;overflow:scroll-y;padding:10px;">
+  <div id="conversation"></div>
+  <input id="data" style="width:200px;" />
+  <input type="button" id="datasend" value="send" />
+</div>
  </body>
