@@ -11,7 +11,7 @@
 		var abc=prompt("What's your name?");
 		if(abc=="" ||  abc =="null"){
 			alert("Để trống ah ????");
-			var abc="";
+			var abc=prompt("What's your name?");
 			console.log(abc);
 		}else{
 			socket.emit('adduser', abc);}
@@ -61,12 +61,6 @@
 			socket.emit('sendimage', url);
 			};
 		});
-		$('#data').keypress(function(x) {
-			if(e.which == 13) {
-				$(this).blur();
-				$('#imagesend').focus().click();
-			}
-		});
 	});
 	$(function(){
 		$('#bannersend').click( function() {
@@ -77,12 +71,6 @@
 			}else{
 			socket.emit('sendbanner', url);
 			};
-		});
-		$('#data').keypress(function(a) {
-			if(e.which == 13) {
-				$(this).blur();
-				$('#bannersend').focus().click();
-			}
 		});
 	});
 	
