@@ -57,10 +57,16 @@ app.use(function(err, req, res, next) {
   });
 });
 
-var usernames = {};
+var usernames = {};	
 app.io.on('connection', function(socket){ 
 	socket.on('sendchat', function (data) {
 		app.io.emit('updatechat', socket.username, data);
+	});
+	socket.on('sendimage', function (data) {
+		app.io.emit('updatechat-image', socket.username, data);
+	});
+	socket.on('sendbanner', function (data) {
+		app.io.emit('updatechat-banner', socket.username, data);
 	});
 	socket.on('adduser', function(username){
 		socket.username = username;
