@@ -39,11 +39,8 @@
 			var message = $('#data').val();
 			$('#data').val('');
 			if(message==""){
-<<<<<<< HEAD
 				alert("Để trống ah ????");
-=======
 				socket.emit('null-data',alert("Để trống ah ????"));
->>>>>>> cb9c698beb06fe320347d1db3614834353d2af72
 			}else{
 				socket.emit('sendchat', message);
 			};
@@ -60,13 +57,7 @@
 			var url = $('#data').val();
 			$('#data').val('');
 			if(url==""){
-<<<<<<< HEAD
 				alert("Để trống ah ????");
-			}else{
-			socket.emit('sendimage', url);
-			};
-=======
-				socket.emit('null-data',alert("Để trống ah ????"));
 			}else{
 			socket.emit('sendimage', url);
 			};
@@ -76,7 +67,6 @@
 				$(this).blur();
 				$('#imagesend').focus().click();
 			}
->>>>>>> cb9c698beb06fe320347d1db3614834353d2af72
 		});
 	});
 	$(function(){
@@ -84,13 +74,7 @@
 			var url = $('#data').val();
 			$('#data').val('');
 			if(url==""){
-<<<<<<< HEAD
 				alert("Để trống ah ????");
-			}else{
-			socket.emit('sendbanner', url);
-			};
-=======
-				socket.emit('null-data',alert("Để trống ah ????"));
 			}else{
 			socket.emit('sendbanner', url);
 			};
@@ -100,7 +84,6 @@
 				$(this).blur();
 				$('#bannersend').focus().click();
 			}
->>>>>>> cb9c698beb06fe320347d1db3614834353d2af72
 		});
 	});
 	
