@@ -12,25 +12,13 @@
 	});
 	
 	socket.on('updatechat', function (username, data) {
-		if(data == ""){	
-			socket.emit('null-data',alert("Để trống ah ????"));
-		}else{
 			$('#conversation').append('<b>'+username + ':</b> ' + data + '<br>');
-		};
 	});
 	socket.on('updatechat-image', function (username, data) {
-		if(data == ""){	
-			socket.emit('null-data',alert("Để trống ah ????"));
-		}else{
 			$('#conversation').append('<b>'+username + ':</b> ' + '<img src="'+data+' "/>' + '<br>');
-		};
 	});
 	socket.on('updatechat-banner', function (username, data) {
-		if(data == ""){	
-			socket.emit('null-data',alert("Để trống ah ????"));
-		}else{
 			$('#conversation').append('<b>'+username + ':</b> ' + '<iframe frameborder="0" scrolling="no" width="400" height="300" src="'+data+' "/>' + '<br>');
-		};
 	});
   
 	socket.on('updateusers', function(data) {
@@ -43,7 +31,11 @@
 		$('#datasend').click( function() {
 			var message = $('#data').val();
 			$('#data').val('');
-			socket.emit('sendchat', message);
+			if(message==""){
+				socket.emit('null-data',alert("Để trống ah ????"));
+			}else{
+				socket.emit('sendchat', message);
+			};
 		});
 		$('#data').keypress(function(e) {
 			if(e.which == 13) {
@@ -56,7 +48,11 @@
 		$('#imagesend').click( function() {
 			var url = $('#data').val();
 			$('#data').val('');
+			if(url==""){
+				socket.emit('null-data',alert("Để trống ah ????"));
+			}else{
 			socket.emit('sendimage', url);
+			};
 		});
 		$('#data').keypress(function(x) {
 			if(e.which == 13) {
@@ -69,7 +65,11 @@
 		$('#bannersend').click( function() {
 			var url = $('#data').val();
 			$('#data').val('');
+			if(url==""){
+				socket.emit('null-data',alert("Để trống ah ????"));
+			}else{
 			socket.emit('sendbanner', url);
+			};
 		});
 		$('#data').keypress(function(a) {
 			if(e.which == 13) {
@@ -84,7 +84,7 @@
  </head>  
 
  <body>  
-	<H1>CHAT DEMO</H1>
+	<H1>CHAT LIVE DEMO</H1>
 	<div style="float:left;width:100px;border-right:1px solid black;height:300px;padding:10px;overflow:scroll-y;">
 	<b>USERS</b>
 	<div id="count"></div>
