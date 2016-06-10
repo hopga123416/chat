@@ -8,14 +8,17 @@
    
 	
 	socket.on('connect', function(){
-		var abc=prompt("What's your name?");
-		if(abc=="" ||  abc =="null"){
-			alert("Để trống ah ????");
+	
+		while(true){
 			var abc=prompt("What's your name?");
-			console.log(abc);
-		}else{
-			socket.emit('adduser', abc);}
-		
+			if(abc=="" ||  abc ==null){
+				alert("Để trống ah ????");
+			}else{
+				socket.emit('adduser', abc);
+				break;
+			}
+		}
+			
 	});
 	
 	socket.on('updatechat', function (username, data) {
