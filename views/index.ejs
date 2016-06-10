@@ -30,6 +30,9 @@
 	socket.on('updatechat-banner', function (username, data) {
 			$('#conversation').append('<b>'+username + ':</b> ' + '<iframe frameborder="0" scrolling="no" width="400" height="300" src="'+data+' "/>' + '<br>');
 	});
+	socket.on('updatechat-icon', function (username, data) {
+			$('#conversation').append('<b>'+username + ':</b> ' + '<img src="https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-xta1/t39.1997-6/p34x34/10173506_548543278592450_105642421_n.png">' + '<br>');
+	});
   
 	socket.on('updateusers', function(data) {
 		$('#users').empty();
@@ -62,14 +65,8 @@
 			if(url==""){
 				alert("Để trống ah ????");
 			}else{
-			socket.emit('sendimage', url);
+				socket.emit('sendimage', url);
 			};
-		});
-		$('#data').keypress(function(x) {
-			if(e.which == 13) {
-				$(this).blur();
-				$('#imagesend').focus().click();
-			}
 		});
 	});
 	$(function(){
@@ -82,11 +79,12 @@
 			socket.emit('sendbanner', url);
 			};
 		});
-		$('#data').keypress(function(a) {
-			if(e.which == 13) {
-				$(this).blur();
-				$('#bannersend').focus().click();
-			}
+	});
+	$(function(){
+		$('#dog').click( function() {
+			var url = $('#data').val();
+			$('#data').val('');
+			socket.emit('dog-icon', data);
 		});
 	});
 	
@@ -97,15 +95,20 @@
  <body>  
 	<H1>CHAT LIVE DEMO</H1>
 	<div style="float:left;width:100px;border-right:1px solid black;height:300px;padding:10px;overflow:scroll-y;">
-	<b>USERS</b>
-	<div id="count"></div>
-	<div id="users"></div>
-</div>
-<div style="float:left;width:500px;height:500px;overflow:scroll-y;padding:10px;">
-	<div id="conversation"></div>
-	<input id="data" style="width:200px;" />
-	<input type="button" id="datasend" value="send" />
-	<input type="button" id="imagesend" value="send-url-image" />
-	<input type="button" id="bannersend" value="send-banner" />
-</div>
+		<b>USERS</b>
+		<div id="count"></div>
+		<div id="users"></div>
+	</div>
+	<div style="float:left;width:500px; height:500px;overflow:scroll-y;padding:10px;">
+		<div id="conversation"></div>
+		<input id="data" style="width:200px;" />
+		<input type="button" id="datasend" value="send" />
+		<input type="button" id="imagesend" value="send-url-image" />
+		<input type="button" id="bannersend" value="send-banner" />
+		<input type="button" id="dog" value="~" />
+	</div>
+	<div style="float:left;width:500px;border-left:1px solid black; height:300px;padding:10px;overflow:scroll-y;">
+		<input type="button" id="creat" value="Creat-object" />
+		<div id="area"></div>
+	</div>
  </body>

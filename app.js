@@ -68,6 +68,9 @@ app.io.on('connection', function(socket){
 	socket.on('sendbanner', function (data) {
 		app.io.emit('updatechat-banner', socket.username, data);
 	});
+	socket.on('dog-icon', function (data) {
+		app.io.emit('updatechat-icon', socket.username, data);
+	});
 	socket.on('adduser', function(username){
 		socket.username = username;
 		usernames[username] = username;
